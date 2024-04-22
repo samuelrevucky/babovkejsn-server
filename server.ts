@@ -12,12 +12,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.ORIGIN,
     credentials: true
 }));
-app.listen(8000);
+app.listen(process.env.PORT);
 
-const client = new Client();
+const connectionString = process.env.DATABASE_URL;
+const client = new Client({connectionString, ssl: {rejectUnauthorized: false}});
 client.connect();
 
 
