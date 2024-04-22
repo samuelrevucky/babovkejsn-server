@@ -2,11 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
-  "type": "module",
+  "main": "server.mjs",
   "scripts": {
-    "test": "nodemon server.ts",
-    "start": "node server.ts"
+    "test": "nodemon server.mjs",
+    "start": "node server.mjs"
   },
   "author": "",
   "license": "ISC",
