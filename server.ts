@@ -21,6 +21,10 @@ const connectionString = process.env.DATABASE_URL;
 const client = new Client({connectionString, ssl: {rejectUnauthorized: false}});
 client.connect();
 
+app.get('/', (req, res) => {
+    res.status(200).send("hello");
+})
+
 
 app.post('/api/authenticate', (req, res) => {
 
