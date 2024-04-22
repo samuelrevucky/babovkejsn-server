@@ -52,7 +52,7 @@ app.post('/api/authenticate', (req, res) => {
                 .status(200)
                 .cookie("authtoken", token, {
                 httpOnly: true,
-                sameSite: false,
+                sameSite: "none",
                 secure: true,
                 maxAge: rememberMe ? 1000 * 60 * 60 * 24 * 30 : 1000 * 60 * 10,
             })
