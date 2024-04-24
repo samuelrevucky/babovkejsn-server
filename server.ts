@@ -56,12 +56,9 @@ app.post('/api/authenticate', (req, res) => {
 
 // middleware verification function
 const cookieJwtAuth = (req: Request, res: Response, next: NextFunction) => {
-    console.log("middleware");
-    console.log(req.body);
     const token = req.body.token as string;
     try {
         jwt.verify(token, process.env.SECRET as Secret);
-        console.log("verified");
         next();
     } 
     catch (err) {
@@ -137,10 +134,10 @@ interface Token {
 app.post('/api/submit_order', cookieJwtAuth, async (req, res) => {
 
     // TODO deposit management
-    
+    console.log(req.body);
     const { token, order_deadline, preparation_time, price, details, note } = req.body;
     const user: Token = jwt.decode(req.body.token) as Token;
-
+    console.log(user);
     let currentDate = new Date();
     currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
     currentDate.setMinutes(currentDate.getMinutes() - currentDate.getTimezoneOffset());
@@ -209,13 +206,10 @@ app.post('/api/submit_order', cookieJwtAuth, async (req, res) => {
   
 
 app.post('/api/orders', cookieJwtAuth, (req, res) => {
-    console.log("ahoj");
     const user: Token = jwt.decode(req.body.token) as Token
-    console.log(user);
     client
         .query("select id, status, order_time, order_deadline, deposit_deadline, price, paid, details, note from orders where user_id = $1;", [user.id])
         .then(dbres => {
-            console.log(dbres.rows);
             res.status(200).json(dbres.rows);
         })
         .catch(err => {
