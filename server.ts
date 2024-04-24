@@ -42,7 +42,7 @@ app.post('/api/authenticate', (req, res) => {
             const user = dbres.rows[0];
             delete user.password;
 
-            const token = jwt.sign(user, process.env.SECRET as Secret, { expiresIn: rememberMe ? "30d" : "10m" });
+            const token = jwt.sign(user, process.env.SECRET as Secret, { expiresIn: rememberMe ? "30d" : "1h" });
             res
             .status(200)
             .json({ authenticated: true, role: user.role, message: 'Authentication successful', token: token});
