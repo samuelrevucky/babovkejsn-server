@@ -61,6 +61,7 @@ const cookieJwtAuth = (req: Request, res: Response, next: NextFunction) => {
     const token = req.body.token as string;
     try {
         jwt.verify(token, process.env.SECRET as Secret);
+        console.log("verified");
         next();
     } 
     catch (err) {
