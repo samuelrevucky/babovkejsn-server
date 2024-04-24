@@ -208,7 +208,9 @@ app.post('/api/submit_order', cookieJwtAuth, async (req, res) => {
   
 
 app.post('/api/orders', cookieJwtAuth, (req, res) => {
+    console.log("ahoj");
     const user: Token = jwt.decode(req.body.token) as Token
+    console.log(user);
     client
         .query("select id, status, order_time, order_deadline, deposit_deadline, price, paid, details, note from orders where user_id = $1;", [user.id])
         .then(dbres => {
