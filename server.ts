@@ -45,13 +45,7 @@ app.post('/api/authenticate', (req, res) => {
             const token = jwt.sign(user, process.env.SECRET as Secret, { expiresIn: rememberMe ? "30d" : "10m" });
             res
             .status(200)
-            .cookie("authtoken", token, {
-                httpOnly: true,
-                sameSite: "none",
-                secure: true,
-                maxAge: rememberMe ? 1000*60*60*24*30 : 1000*60*10,
-            })
-            .json({ authenticated: true, role: user.role, message: 'Authentication successful' });
+            .json({ authenticated: true, role: user.role, message: 'Authentication successful', token: token});
         }
     })
     .catch(err => {
