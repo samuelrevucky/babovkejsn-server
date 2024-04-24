@@ -212,6 +212,7 @@ app.post('/api/orders', cookieJwtAuth, (req, res) => {
     client
         .query("select id, status, order_time, order_deadline, deposit_deadline, price, paid, details, note from orders where user_id = $1;", [user.id])
         .then(dbres => {
+            console.log(dbres.rows);
             res.status(200).json(dbres.rows);
         })
         .catch(err => {
