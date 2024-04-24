@@ -56,7 +56,7 @@ app.post('/api/authenticate', (req, res) => {
 
 // middleware verification function
 const cookieJwtAuth = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.authtoken;
+    const token = req.headers.token as string;
     try {
         jwt.verify(token, process.env.SECRET as Secret);
         next();
