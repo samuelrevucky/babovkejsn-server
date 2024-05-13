@@ -56,7 +56,7 @@ const sessionStore = new ConnectSession({
 const admin = new AdminJS({
     databases: [db],
 });
-admin.watch();
+//admin.watch();
 
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
