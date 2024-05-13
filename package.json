@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
+  "type": "module",
   "scripts": {
     "test": "nodemon server.ts",
     "start": "node build/server.js",
@@ -11,21 +12,29 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@adminjs/express": "^6.1.0",
+    "@adminjs/sql": "^2.2.3",
+    "adminjs": "^7.6.1",
+    "connect-pg-simple": "^9.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.11.5"
+    "pg": "^8.11.5",
+    "tinymce": "^7.0.1",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
+    "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.5",
     "@types/pg": "^8.11.5",
+    "@types/validator": "^13.11.10",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2"
   }
