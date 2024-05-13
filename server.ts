@@ -22,11 +22,12 @@ AdminJS.registerAdapter({
 
 const db = await new Adapter('postgresql', {
     connectionString: process.env.DATABASE_URL,
-    database: 'babovkejsn'
+    ssl: {rejectUnauthorized: false},
+    database: process.env.DATABASE_NAME
   }).init();
 
 const connectionString = process.env.DATABASE_URL;
-const client = new Client({connectionString});
+const client = new Client({connectionString, ssl: {rejectUnauthorized: false}});
 client.connect();
 
 const authenticate = async (email: string, password: string) => {
@@ -45,7 +46,8 @@ const authenticate = async (email: string, password: string) => {
 const ConnectSession = Connect(session);
 const sessionStore = new ConnectSession({
     conObject: {
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_URL,
+      ssl: {rejectUnauthorized: false}
     },
     tableName: 'session',
     createTableIfMissing: true,
