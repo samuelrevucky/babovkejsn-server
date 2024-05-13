@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, Router } from 'express';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -31,7 +31,6 @@ const client = new Client({connectionString, ssl: {rejectUnauthorized: false}});
 client.connect();
 
 const authenticate = async (email: string, password: string) => {
-    console.log("tried to authenticate");
     return await client.query("select role, password from users where email=$1", [email])
         .then((res) => {
             if (res.rowCount === 1 && res.rows[0].role === 'admin' && res.rows[0].password === password) {
@@ -57,21 +56,22 @@ const sessionStore = new ConnectSession({
 const admin = new AdminJS({
     databases: [db],
 });
-//admin.watch();
+if (process.env.NODE_ENV === 'production') await admin.initialize();
+  else admin.watch();
 
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
     {
       authenticate,
       cookieName: 'adminjs',
-      cookiePassword: 'sessionsecret',
+      cookiePassword: process.env.SECRET,
     },
     null,
     {
       store: sessionStore,
       resave: true,
       saveUninitialized: true,
-      secret: 'sessionsecret',
+      secret: process.env.SECRET,
       cookie: {
         httpOnly: process.env.NODE_ENV === 'production',
         secure: process.env.NODE_ENV === 'production',
